@@ -34,16 +34,30 @@ void setup() {
   sensors.request(address);
 }
 
+bool isTemperatureOutOfBoundries(float temperature) {
+  return temperature <= TEMP_TOO_LOW_THRESHOLD
+      || temperature >= TEMP_TOO_HIGH_THRESHOLD;
+}
+
+void logTemperature(float temperature) {
+  Serial.print(temperature);
+  Serial.println(F(" 'C"));
+}
+
+void makeAlarmSound() {
+  tone(SPEAKER_PIN, 480);
+  delay(500);
+  noTone(SPEAKER_PIN);
+  delay(200);
+}
+
 void loop() {
   if (sensors.available()) {
     float temperature = sensors.readTemperature(address);
 
-    Serial.print(temperature);
-    Serial.println(F(" 'C"));
+    logTemperature(temperature);
 
-    if (temperature <= TEMP_TOO_LOW_THRESHOLD
-      || temperature >= TEMP_TOO_HIGH_THRESHOLD
-    ) {
+    if (isTemperatureOutOfBoundries(temperature)) {
       alarmIsRinging = true;
     } else {
       alarmIsSilenced = false;
@@ -62,10 +76,7 @@ void loop() {
     digitalWrite(ALARM_LED_PIN, HIGH);
 
     if (!alarmIsSilenced) {
-      tone(SPEAKER_PIN, 480);
-      delay(500);
-      noTone(SPEAKER_PIN);
-      delay(200);
+      makeAlarmSound();
     }
   } else {
     digitalWrite(ALARM_LED_PIN, LOW);
