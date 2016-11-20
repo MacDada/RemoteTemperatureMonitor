@@ -8,11 +8,11 @@ d_wifi.connect(d_config["wifis"][d_config["wifi"]], d_credentials[d_config["wifi
 
     local ts = d_thingspeak.new(d_credentials["thingspeak_api_key"])
 
-    ds = require("ds18b20")
-    pin = d_config["thermometer_input_pin"]
+    local ds = require("ds18b20")
+    local pin = d_config["thermometer_input_pin"]
     ds.setup(pin)
 
-    addrs = ds.addrs()
+    local addrs = ds.addrs()
     if (addrs ~= nil) then
         -- bug: always showing 0:
         -- https://github.com/nodemcu/nodemcu-firmware/issues/429
