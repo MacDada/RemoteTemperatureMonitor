@@ -1,0 +1,2 @@
+# contains passwords (should be kept secret)
+/src/nodemcu-lua/credentials.lua
