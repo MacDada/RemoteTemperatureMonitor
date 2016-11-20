@@ -5,5 +5,6 @@ d_config = {
         ["wifi_production"] = "IphoneLody"
     },
     ["wifi"] = "wifi_home_downstairs",
-    ["timeout_between_measures_in_seconds"] = 10
+    ["timeout_between_measures_in_seconds"] = 10,
+    ["thermometer_input_pin"] = 1 -- gpio5 (D1)
 }
