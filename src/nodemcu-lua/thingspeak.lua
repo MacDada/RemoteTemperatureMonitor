@@ -33,7 +33,10 @@ function d_thingspeak:update(fieldNumber, value)
 
     conn:on("connection", function(conn)
         print("Sending request")
-        print(request)
+
+        -- hiding apiKey as it is secret
+        print(string.gsub(request, self.apiKey, 'X_secret_apiKey_X'))
+
         conn:send(request)
     end)
 
