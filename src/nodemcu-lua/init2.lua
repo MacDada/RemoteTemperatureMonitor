@@ -14,8 +14,8 @@ d_wifi.connect(WIFI_NAME, WIFI_PASSWORD, function()
     local thingspeakApi = d_thingspeak.new(d_credentials.thingspeak_api_key)
 
     local dsApi = require("ds18b20")
-    local pin = d_config.thermometer_input_pin
-    dsApi.setup(pin)
+
+    dsApi.setup(d_config.thermometer_input_pin)
 
     local addrs = dsApi.addrs()
     if (addrs ~= nil) then
