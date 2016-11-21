@@ -8,7 +8,7 @@ dsApi.setup(d_config.thermometer_input_pin)
 
 local addrs = dsApi.addrs()
 
-if (addrs ~= nil) then
+if (nil ~= addrs) then
     -- bug: always showing 0:
     -- https://github.com/nodemcu/nodemcu-firmware/issues/429
     print("Total DS18B20 sensors: "..table.getn(addrs))
