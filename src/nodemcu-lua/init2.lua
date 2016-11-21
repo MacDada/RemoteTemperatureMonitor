@@ -23,5 +23,10 @@ d_wifi.connect(WIFI_NAME, WIFI_PASSWORD, function()
 
     measureAndLogTemperature()
 
-    tmr.alarm(0, d_config.timeout_between_measures_in_seconds*1000, 1, measureAndLogTemperature)
+    tmr.alarm(
+        0,
+        d_config.timeout_between_measures_in_seconds * 1000,
+        1,
+        measureAndLogTemperature
+    )
 end)
