@@ -14,18 +14,16 @@ if (addrs ~= nil) then
     print("Total DS18B20 sensors: "..table.getn(addrs))
 end
 
-local function measureTemperature()
-    local temperature = dsApi.read(addrs[1], dsApi.C)
-    print("Measured temp: ".. temperature)
-
-    if (SENSOR_ERROR_TEMPERATURE == temperature) then
-        print("Measuring temp error, trying again...")
-        return measureTemperature()
-    else
-        return temperature
-    end
-end
-
 d_thermometer = {
-    measureTemperature = measureTemperature
+    measureTemperature = function()
+        local temperature = dsApi.read(addrs[1], dsApi.C)
+        print("Measured temp: ".. temperature)
+
+        if (SENSOR_ERROR_TEMPERATURE == temperature) then
+            print("Measuring temp error, trying again...")
+            return measureTemperature()
+        else
+            return temperature
+        end
+    end
 }
