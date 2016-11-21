@@ -3,13 +3,13 @@ dofile("config.lua")
 dofile("wifi.lua")
 dofile("thingspeak.lua")
 
-d_wifi.connect(d_config["wifis"][d_config["wifi"]], d_credentials[d_config["wifi"]], function()
+d_wifi.connect(d_config.wifis[d_config.wifi], d_credentials[d_config.wifi], function()
     d_wifi.printConnectionDetails()
 
-    local ts = d_thingspeak.new(d_credentials["thingspeak_api_key"])
+    local ts = d_thingspeak.new(d_credentials.thingspeak_api_key)
 
     local ds = require("ds18b20")
-    local pin = d_config["thermometer_input_pin"]
+    local pin = d_config.thermometer_input_pin
     ds.setup(pin)
 
     local addrs = ds.addrs()
@@ -31,7 +31,7 @@ d_wifi.connect(d_config["wifis"][d_config["wifi"]], d_credentials[d_config["wifi
         end
     end
 
-    tmr.alarm(0, d_config["timeout_between_measures_in_seconds"]*1000, 1, function()
+    tmr.alarm(0, d_config.timeout_between_measures_in_seconds*1000, 1, function()
         ts:update(2, measureTemp())
     end)
 end)
