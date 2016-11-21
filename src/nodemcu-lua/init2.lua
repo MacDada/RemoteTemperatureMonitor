@@ -3,12 +3,12 @@ dofile("config.lua")
 dofile("wifi.lua")
 dofile("thingspeak.lua")
 
-local wifiName = d_config.wifis[d_config.wifi]
-local wifiPassword = d_credentials[d_config.wifi]
+local WIFI_NAME = d_config.wifis[d_config.wifi]
+local WIFI_PASSWORD = d_credentials[d_config.wifi]
 
 local SENSOR_ERROR_TEMPERATURE = 85;
 
-d_wifi.connect(wifiName, wifiPassword, function()
+d_wifi.connect(WIFI_NAME, WIFI_PASSWORD, function()
     d_wifi.printConnectionDetails()
 
     local thingspeakApi = d_thingspeak.new(d_credentials.thingspeak_api_key)
