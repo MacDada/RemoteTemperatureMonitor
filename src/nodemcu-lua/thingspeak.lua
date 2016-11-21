@@ -1,3 +1,7 @@
+local function string_replace(subject, find, replace)
+    return string.gsub(subject, find, replace)
+end
+
 d_thingspeak = {
     apiHost = 'api.thingspeak.com'
 }
@@ -35,7 +39,7 @@ function d_thingspeak:update(fieldNumber, value)
         print("Sending request")
 
         -- hiding apiKey as it is secret
-        print(string.gsub(request, self.apiKey, 'X_secret_apiKey_X'))
+        print(string_replace(request, self.apiKey, 'X_secret_apiKey_X'))
 
         conn:send(request)
     end)
