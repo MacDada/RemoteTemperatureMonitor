@@ -4,18 +4,30 @@ local SENSOR_ERROR_TEMPERATURE = 85;
 
 local dsApi = require("ds18b20")
 
-dsApi.setup(d_config.thermometer_input_pin)
-
-local addrs = dsApi.addrs()
-
-if (nil ~= addrs) then
-    -- bug: always showing 0:
-    -- https://github.com/nodemcu/nodemcu-firmware/issues/429
-    print("Total DS18B20 sensors: "..table.getn(addrs))
-end
+local addrs
 
 d_thermometer = {
+    initialized = false,
+
+    initialize = function()
+        dsApi.setup(d_config.thermometer_input_pin)
+
+        addrs = dsApi.addrs()
+
+        if (nil ~= addrs) then
+            -- bug: always showing 0:
+            -- https://github.com/nodemcu/nodemcu-firmware/issues/429
+            print("Total DS18B20 sensors: "..table.getn(addrs))
+        end
+
+        d_thermometer.initialized = true
+    end,
+
     measureTemperature = function()
+        if (false == d_thermometer.initialized) then
+            d_thermometer.initialize()
+        end
+
         local temperature = dsApi.read(addrs[1], dsApi.C)
         print("Measured temp: ".. temperature)
 
