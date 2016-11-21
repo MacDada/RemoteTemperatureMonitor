@@ -6,6 +6,8 @@ dofile("thingspeak.lua")
 local wifiName = d_config.wifis[d_config.wifi]
 local wifiPassword = d_credentials[d_config.wifi]
 
+local SENSOR_ERROR_TEMPERATURE = 85;
+
 d_wifi.connect(wifiName, wifiPassword, function()
     d_wifi.printConnectionDetails()
 
@@ -26,7 +28,7 @@ d_wifi.connect(wifiName, wifiPassword, function()
         local temperature = dsApi.read(addrs[1], dsApi.C)
         print("Measured temp: ".. temperature)
 
-        if (85 == temperature) then
+        if (SENSOR_ERROR_TEMPERATURE == temperature) then
             print("Measuring temp error, trying again...")
             return measureTemperature()
         else
