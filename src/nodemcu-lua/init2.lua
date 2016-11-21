@@ -3,38 +3,38 @@ dofile("config.lua")
 dofile("wifi.lua")
 dofile("thingspeak.lua")
 
-local wifi_name = d_config.wifis[d_config.wifi]
-local wifi_password = d_credentials[d_config.wifi]
+local wifiName = d_config.wifis[d_config.wifi]
+local wifiPassword = d_credentials[d_config.wifi]
 
-d_wifi.connect(wifi_name, wifi_password, function()
+d_wifi.connect(wifiName, wifiPassword, function()
     d_wifi.printConnectionDetails()
 
-    local ts = d_thingspeak.new(d_credentials.thingspeak_api_key)
+    local thingspeakApi = d_thingspeak.new(d_credentials.thingspeak_api_key)
 
-    local ds = require("ds18b20")
+    local dsApi = require("ds18b20")
     local pin = d_config.thermometer_input_pin
-    ds.setup(pin)
+    dsApi.setup(pin)
 
-    local addrs = ds.addrs()
+    local addrs = dsApi.addrs()
     if (addrs ~= nil) then
         -- bug: always showing 0:
         -- https://github.com/nodemcu/nodemcu-firmware/issues/429
         print("Total DS18B20 sensors: "..table.getn(addrs))
     end
 
-    local function measureTemp()
-        local temp = ds.read(addrs[1], ds.C)
-        print("Measured temp: "..temp)
+    local function measureTemperature()
+        local temperature = dsApi.read(addrs[1], dsApi.C)
+        print("Measured temp: ".. temperature)
 
-        if (85 == temp) then
+        if (85 == temperature) then
             print("Measuring temp error, trying again...")
-            return measureTemp()
+            return measureTemperature()
         else
-            return temp
+            return temperature
         end
     end
 
     tmr.alarm(0, d_config.timeout_between_measures_in_seconds*1000, 1, function()
-        ts:update(2, measureTemp())
+        thingspeakApi:update(2, measureTemperature())
     end)
 end)
