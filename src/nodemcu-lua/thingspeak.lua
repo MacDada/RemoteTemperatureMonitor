@@ -14,7 +14,7 @@ function d_thingspeak.new(apiKey, apiIp)
 end
 
 function d_thingspeak:update(fieldNumber, value)
-    local request = "GET "
+    local request = "POST "
         .."/update"
         .."?api_key="..self.apiKey
         .."&field"..fieldNumber.."="..value.." "
