@@ -3,7 +3,10 @@ dofile("config.lua")
 dofile("wifi.lua")
 dofile("thingspeak.lua")
 
-d_wifi.connect(d_config.wifis[d_config.wifi], d_credentials[d_config.wifi], function()
+local wifi_name = d_config.wifis[d_config.wifi]
+local wifi_password = d_credentials[d_config.wifi]
+
+d_wifi.connect(wifi_name, wifi_password, function()
     d_wifi.printConnectionDetails()
 
     local ts = d_thingspeak.new(d_credentials.thingspeak_api_key)
