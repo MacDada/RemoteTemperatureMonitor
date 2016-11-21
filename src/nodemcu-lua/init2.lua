@@ -10,6 +10,8 @@ local WIFI_PASSWORD = d_credentials[d_config.wifi]
 local THINGSPEAK_CHANNEL_FIELD = 2
 
 local repeat_delayed_by_seconds = function(seconds, callback)
+    callback()
+
     tmr.alarm(0, seconds * 1000, 1, function()
         callback()
     end)
@@ -26,8 +28,6 @@ d_wifi.connect(WIFI_NAME, WIFI_PASSWORD, function()
             d_thermometer.measureTemperature()
         )
     end
-
-    measureAndLogTemperature()
 
     repeat_delayed_by_seconds(
         d_config.timeout_between_measures_in_seconds,
