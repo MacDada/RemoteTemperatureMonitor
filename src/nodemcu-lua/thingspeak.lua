@@ -2,6 +2,21 @@ local function string_replace(subject, find, replace)
     return string.gsub(subject, find, replace)
 end
 
+-- source: http://lua-users.org/wiki/StringRecipes
+local function url_encode(str)
+    str = string.gsub(str, "\n", "\r\n")
+    str = string.gsub(
+        str,
+        "([^%w %-%_%.%~])",
+        function (c)
+            return string.format("%%%02X", string.byte(c))
+        end
+    )
+    str = string.gsub(str, " ", "+")
+
+    return str
+end
+
 d_thingspeak = {
     apiHost = 'api.thingspeak.com'
 }
@@ -24,9 +39,9 @@ function d_thingspeak:update(fields)
     for fieldNumber, fieldValue in pairs(fields) do
        fieldsString = fieldsString
            ..'&field'
-           ..fieldNumber
+           ..tonumber(fieldNumber)
            ..'='
-           ..fieldValue
+           ..url_encode(fieldValue)
     end
 
     local request = "POST "
