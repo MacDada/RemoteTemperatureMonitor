@@ -14,11 +14,7 @@ d_thermometer = {
 
         addrs = dsApi.addrs()
 
-        if (nil ~= addrs) then
-            -- bug: always showing 0:
-            -- https://github.com/nodemcu/nodemcu-firmware/issues/429
-            print("Total DS18B20 sensors: "..table.getn(addrs))
-        end
+        print("Total DS18B20 sensors: "..table.getn(addrs))
 
         d_thermometer.initialized = true
     end,
