@@ -17,17 +17,23 @@ local function url_encode(str)
     return str
 end
 
+local function value_or_default_when_nil(value, default)
+    return nil == value and default or value
+end
+
 d_thingspeak = {
     apiHost = 'api.thingspeak.com'
 }
 
 d_thingspeak.__index = d_thingspeak
 
-function d_thingspeak.new(apiKey, apiIp)
+function d_thingspeak.new(apiKey, apiIp, hideApiKeyInLogs)
     local settings = {}
     setmetatable(settings, d_thingspeak)
+
     settings.apiKey = apiKey
     settings.apiIp = apiIp or "184.106.153.149"
+    settings.hideApiKeyInLogs = value_or_default_when_nil(hideApiKeyInLogs, true)
 
     return settings
 end
@@ -64,8 +70,11 @@ function d_thingspeak:update(fields)
     conn:on("connection", function(conn)
         print("Sending request")
 
-        -- hiding apiKey as it is secret
-        print(string_replace(request, self.apiKey, 'X_secret_apiKey_X'))
+        if self.hideApiKeyInLogs then
+            print(string_replace(request, self.apiKey, 'X_secret_apiKey_X'))
+        else
+            print(request)
+        end
 
         conn:send(request)
     end)
