@@ -15,6 +15,13 @@ Todo
 * `luatool` to upload files?
   https://github.com/4refr0nt/luatool
 * use `master` version of flash, when new version is published (~ december 2016)
+* multiple thermometers
+    * solder second thermometer to nodemcu
+    * update `thermometer.lua` to handle multiple thermometers
+    * update Fritzing project
+* decide if to use parasite mode for ds18b20
+* plan how many thermometers would be with how many esp8266 chips
+* make a decision on final esp8266 chip
 
 
 Flash
