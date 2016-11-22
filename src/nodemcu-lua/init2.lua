@@ -9,6 +9,17 @@ local WIFI_PASSWORD = d_credentials[d_config.wifi]
 
 local THINGSPEAK_CHANNEL_FIELD = 2
 
+local repeat_delayed_by_seconds = function(seconds, callback)
+    callback()
+
+    tmr.alarm(
+        0, -- alarm id
+        seconds * 1000,
+        tmr.ALARM_AUTO,
+        callback
+    )
+end
+
 d_wifi.connect(WIFI_NAME, WIFI_PASSWORD, function()
     d_wifi.printConnectionDetails()
 
@@ -21,12 +32,8 @@ d_wifi.connect(WIFI_NAME, WIFI_PASSWORD, function()
         )
     end
 
-    measureAndLogTemperature()
-
-    tmr.alarm(
-        0, -- alarm id
-        d_config.timeout_between_measures_in_seconds * 1000,
-        tmr.ALARM_AUTO,
+    repeat_delayed_by_seconds(
+        d_config.timeout_between_measures_in_seconds,
         measureAndLogTemperature
     )
 end)
