@@ -24,11 +24,15 @@ tmr.alarm(0, 1000, 1, function()
         if file.open("init2.lc") then
             file.close()
             s, err = pcall(function() dofile("init2.lc") end)
-            if not s then print(err) end
+            if not s then
+                print(err)
+            end
         elseif file.open("init2.lua") then
             file.close()
             s, err = pcall(function() dofile("init2.lua") end)
-            if not s then print(err) end
+            if not s then
+                print(err)
+            end
         else
             print("\n\nNo file init2.lua!")
         end
