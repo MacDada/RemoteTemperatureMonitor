@@ -22,6 +22,15 @@ Todo
 * decide if to use parasite mode for ds18b20
 * plan how many thermometers would be with how many esp8266 chips
 * make a decision on final esp8266 chip
+* make plan for monitoring system
+	* one to put on place and one to use remotely
+    * lcd
+    * green led – everything is fine
+    * red blinking led – something is wrong
+    * sound alaram when something is wrong
+    * any button disables sound alarm
+    * button to switch between thermometers
+    * lcd shows thermometer name, its temperature and alarm temperature
 
 
 Flash
