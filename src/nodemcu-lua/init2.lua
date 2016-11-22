@@ -26,10 +26,9 @@ d_wifi.connect(WIFI_NAME, WIFI_PASSWORD, function()
     local thingspeakApi = d_thingspeak.new(d_credentials.thingspeak_api_key)
 
     local function measureAndLogTemperature()
-        thingspeakApi:update(
-            THINGSPEAK_CHANNEL_FIELD,
-            d_thermometer.measureTemperature()
-        )
+        thingspeakApi:update({
+            [THINGSPEAK_CHANNEL_FIELD] = d_thermometer.measureTemperature(),
+        })
     end
 
     repeat_delayed_by_seconds(

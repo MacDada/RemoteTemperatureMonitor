@@ -17,11 +17,22 @@ function d_thingspeak.new(apiKey, apiIp)
     return settings
 end
 
-function d_thingspeak:update(fieldNumber, value)
+-- fields is a table with field numbers as keys
+function d_thingspeak:update(fields)
+    local fieldsString = ''
+
+    for fieldNumber, fieldValue in pairs(fields) do
+       fieldsString = fieldsString
+           ..'&field'
+           ..fieldNumber
+           ..'='
+           ..fieldValue
+    end
+
     local request = "POST "
         .."/update"
         .."?api_key="..self.apiKey
-        .."&field"..fieldNumber.."="..value.." "
+        ..fieldsString.." "
         .."HTTP/1.1\r\n"
         .."Host: "..self['apiHost'].."\r\n"
         .."Accept: */*\r\n"
