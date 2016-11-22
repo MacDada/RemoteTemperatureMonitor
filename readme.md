@@ -4,8 +4,6 @@ RemoteTemperatureMonitor
 Todo
 ---
 
-* upgrade nodemcu as one of bugs is already fixed: 
-  https://github.com/nodemcu/nodemcu-firmware/issues/429
 * replace `net` module with `http` (make new flash with it):
   https://nodemcu.readthedocs.io/en/master/en/modules/http/
 * audio? https://nodemcu.readthedocs.io/en/master/en/modules/pcm/
