@@ -6,6 +6,6 @@ d_config = {
         wifi_csa = "TeamCSA"
     },
     wifi = "wifi_home_downstairs",
-    timeout_between_measures_in_seconds = 10,
+    timeout_between_measures_in_seconds = 5, -- 5 is ok for debugging, it might be 30 for the final product
     thermometer_input_pin = 1 -- gpio5 (D1)
 }
