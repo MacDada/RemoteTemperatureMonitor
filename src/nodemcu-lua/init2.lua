@@ -18,14 +18,29 @@ local repeat_delayed_by_seconds = function(seconds, callback)
     )
 end
 
+-- table.getn() does not count entries with non–numeric keys :(
+-- http://stackoverflow.com/a/2705804/666907
+local function tableLength(table)
+    local count = 0
+
+    for _ in pairs(table) do
+        count = count + 1
+    end
+
+    return count
+end
+
 local function assignTemperaturesToThingSpeakChartFields(temperatures)
     local fieldsTemperatures = {}
-    local fieldNumber = 0
 
-    for _, temperature in pairs(temperatures) do
-        fieldNumber = fieldNumber + 1
+    for thermometerAddress, temperature in pairs(temperatures) do
+        local fieldNumber = d_config["thermometers_thingspeak_fields"][thermometerAddress]
 
-        fieldsTemperatures[fieldNumber] = temperature
+        if nil ~= fieldNumber then
+            fieldsTemperatures[fieldNumber] = temperature
+        else
+            print('Thermometer with address '..thermometerAddress..' has no assigned ThingSpeak field!')
+        end
     end
 
     return fieldsTemperatures
@@ -39,7 +54,7 @@ d_wifi.connect(WIFI_NAME, WIFI_PASSWORD, function()
     local function measureAndLogTemperatures()
         local temperatures = d_thermometer.measureTemperature()
 
-        if table.getn(temperatures) > 0 then
+        if tableLength(temperatures) > 0 then
             thingspeakApi:update(
                 assignTemperaturesToThingSpeakChartFields(temperatures)
             )

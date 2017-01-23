@@ -57,7 +57,10 @@ d_thermometer = {
         local temperatures = {}
 
         for _, thermometerAddress in pairs(addrs) do
-            table.insert(temperatures, doMeasureTemperature(thermometerAddress))
+            local readableAddress = humanReadableSensorAddress(thermometerAddress)
+            local temperature = doMeasureTemperature(thermometerAddress)
+
+            temperatures[readableAddress] = temperature
         end
 
         return temperatures
