@@ -7,8 +7,6 @@ dofile('thermometer.lua')
 local WIFI_NAME = d_config.wifis[d_config.wifi]
 local WIFI_PASSWORD = d_credentials[d_config.wifi]
 
-local THINGSPEAK_CHANNEL_FIELD = 2
-
 local repeat_delayed_by_seconds = function(seconds, callback)
     callback()
 
@@ -20,19 +18,38 @@ local repeat_delayed_by_seconds = function(seconds, callback)
     )
 end
 
+local function assignTemperaturesToThingSpeakChartFields(temperatures)
+    local fieldsTemperatures = {}
+    local fieldNumber = 0
+
+    for _, temperature in pairs(temperatures) do
+        fieldNumber = fieldNumber + 1
+
+        fieldsTemperatures[fieldNumber] = temperature
+    end
+
+    return fieldsTemperatures
+end
+
 d_wifi.connect(WIFI_NAME, WIFI_PASSWORD, function()
     d_wifi.printConnectionDetails()
 
     local thingspeakApi = d_thingspeak.new(d_credentials.thingspeak_api_key)
 
-    local function measureAndLogTemperature()
-        thingspeakApi:update({
-            [THINGSPEAK_CHANNEL_FIELD] = d_thermometer.measureTemperature(),
-        })
+    local function measureAndLogTemperatures()
+        local temperatures = d_thermometer.measureTemperature()
+
+        if table.getn(temperatures) > 0 then
+            thingspeakApi:update(
+                assignTemperaturesToThingSpeakChartFields(temperatures)
+            )
+        else
+            print('There are no temperatures to publish')
+        end
     end
 
     repeat_delayed_by_seconds(
         d_config.timeout_between_measures_in_seconds,
-        measureAndLogTemperature
+        measureAndLogTemperatures
     )
 end)
