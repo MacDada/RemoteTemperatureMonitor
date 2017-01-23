@@ -4,10 +4,28 @@ local SENSOR_ERROR_TEMPERATURE = 85;
 
 local dsApi = require("ds18b20")
 
+local function humanReadableSensorAddress(addr)
+    -- https://bigdanzblog.wordpress.com/2015/04/25/esp8266-and-ds18b20-transmitting-temperature-data/
+    return string.format(
+        "%02X-%02X-%02X-%02X-%02X-%02X-%02X-%02X",
+        addr:byte(1),
+        addr:byte(2),
+        addr:byte(3),
+        addr:byte(4),
+        addr:byte(5),
+        addr:byte(6),
+        addr:byte(7),
+        addr:byte(8)
+    )
+end
+
 local function doMeasureTemperature(thermometerAddress)
     local temperature = dsApi.read(thermometerAddress, dsApi.C)
 
-    print("Measured temp ".. temperature.." for sensor "..thermometerAddress)
+    print(
+        "Measured temp "..temperature
+        .." for sensor "..humanReadableSensorAddress(thermometerAddress)
+    )
 
     if (SENSOR_ERROR_TEMPERATURE == temperature) then
         print("Error while measuring temperature, trying again...")
