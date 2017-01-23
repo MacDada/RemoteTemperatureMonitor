@@ -29,6 +29,8 @@ ESP8266 device options
 * ~~on/off button~~ not needed (?), just unplug and plug the power supply
 * a few thermometers (ds18b20)
 * some way to plug the thermometers (it should be easy to do that)
+* buzzer for error sound
+* button to turn off sound error
 
 
 Todo
@@ -50,7 +52,7 @@ Todo
   https://github.com/4refr0nt/luatool
 * use `master` version of flash, when new version is published (~ december 2016)
 * multiple thermometers
-    * solder second thermometer to nodemcu
+    * solder a third thermometer to nodemcu
     * update `thermometer.lua` to handle multiple thermometers
     * update Fritzing project
 * ~~decide if to use parasite mode for ds18b20~~ yep, parasite
