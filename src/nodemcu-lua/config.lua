@@ -8,8 +8,12 @@ d_config = {
     wifi = "wifi_home_downstairs",
     timeout_between_measures_in_seconds = 5, -- 5 is ok for debugging, it might be 30 for the final product
     thermometer_input_pin = 1, -- gpio5 (D1)
+    thermometers_names_addresses = {
+        black = "28-FF-F1-DD-33-16-03-21",
+        white = "28-DE-91-C0-06-00-00-5B"
+    },
     thermometers_thingspeak_fields = {}
 }
 
-d_config["thermometers_thingspeak_fields"]["28-FF-F1-DD-33-16-03-21"] = "1"
-d_config["thermometers_thingspeak_fields"]["28-DE-91-C0-06-00-00-5B"] = "2"
+d_config["thermometers_thingspeak_fields"]["black"] = "1"
+d_config["thermometers_thingspeak_fields"]["white"] = "2"

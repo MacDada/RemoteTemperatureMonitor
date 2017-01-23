@@ -30,16 +30,20 @@ local function tableLength(table)
     return count
 end
 
+local function thermometerNameToAddress(name)
+    return d_config["thermometers_thingspeak_fields"][name]
+end
+
 local function assignTemperaturesToThingSpeakChartFields(temperatures)
     local fieldsTemperatures = {}
 
-    for thermometerAddress, temperature in pairs(temperatures) do
-        local fieldNumber = d_config["thermometers_thingspeak_fields"][thermometerAddress]
+    for thermometerName, temperature in pairs(temperatures) do
+        local fieldNumber = thermometerNameToAddress(thermometerName)
 
         if nil ~= fieldNumber then
             fieldsTemperatures[fieldNumber] = temperature
         else
-            print('Thermometer with address '..thermometerAddress..' has no assigned ThingSpeak field!')
+            print('Thermometer named '.. thermometerName ..' has no assigned ThingSpeak field!')
         end
     end
 
