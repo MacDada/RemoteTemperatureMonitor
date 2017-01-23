@@ -54,7 +54,6 @@ Todo
 * multiple thermometers
     * solder a third thermometer to nodemcu
     * update `thermometer.lua` to handle multiple thermometers
-    * update Fritzing project
 * ~~decide if to use parasite mode for ds18b20~~ yep, parasite
 * plan how many thermometers would be with how many esp8266 chips
 * make a decision on final esp8266 chip
