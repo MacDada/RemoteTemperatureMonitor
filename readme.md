@@ -1,9 +1,43 @@
 RemoteTemperatureMonitor
 ===
 
+General notes
+---
+
+* One esp8266 to handle multiple thermometers
+
+ESP8266 device options
+---
+
+### "Simple"
+
+* chip
+	* [16,99 + 7 = 23,99 zł](http://allegro.pl/modul-sieciowy-wifi-esp8266-sterowanie-rs232-at-i5506834559.html)
+
+### Devkit
+
+* devkit
+	* [29,99 + 7 = 36,99](http://allegro.pl/modul-wifi-esp8266-nodemcu-v3-arduino-cp2102-i6646289495.html)
+* usb charger
+	* [2,49 + 4,5 = 6,99](http://allegro.pl/ladowarka-zasilacz-usb-do-mp3-mp4-iphone-telefonu-i6571311314.html)
+
+### Common
+
+* green led beam: everything is working fine
+* green led flash: "working" (transmitting data)
+* red led flash: a problem (with getting temperature, transmitting data, or whatever)
+* ~~on/off button~~ not needed (?), just unplug and plug the power supply
+* a few thermometers (ds18b20)
+* some way to plug the thermometers (it should be easy to do that)
+
+
 Todo
 ---
 
+* inputting wifi credentials
+	* by usb connection and code upload
+	* by some built–in interface
+	* by some connectable interface
 * replace `net` module with `http` (make new flash with it):
   https://nodemcu.readthedocs.io/en/master/en/modules/http/
 * audio? https://nodemcu.readthedocs.io/en/master/en/modules/pcm/
@@ -19,7 +53,7 @@ Todo
     * solder second thermometer to nodemcu
     * update `thermometer.lua` to handle multiple thermometers
     * update Fritzing project
-* decide if to use parasite mode for ds18b20
+* ~~decide if to use parasite mode for ds18b20~~ yep, parasite
 * plan how many thermometers would be with how many esp8266 chips
 * make a decision on final esp8266 chip
 * make plan for monitoring system
